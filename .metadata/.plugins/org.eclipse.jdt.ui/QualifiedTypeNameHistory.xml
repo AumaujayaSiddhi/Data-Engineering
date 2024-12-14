@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="org.apache.hadoop.mapred.MapReduceBase"/>
+    <fullyQualifiedTypeName name="org.apache.hadoop.mapreduce.Mapper"/>
+    <fullyQualifiedTypeName name="evenoddsum.EvenOddMapper"/>
+    <fullyQualifiedTypeName name="evenoddsum.EvenOddReducer"/>
+</qualifiedTypeNameHistroy>

@@ -1,0 +1,9 @@
+/**
+ * 
+ */
+/**
+ * 
+ */
+module mapreduce {
+	requires hadoop.mapreduce.client.core;
+}

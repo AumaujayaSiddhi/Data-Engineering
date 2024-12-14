@@ -1,0 +1,7 @@
+package primenumbermapreduce;
+
+import org.apache.hadoop.mapreduce.Mapper;
+
+public class PrimeNumberMapper extends Mapper<KEYIN, VALUEIN, KEYOUT, VALUEOUT>{
+
+}

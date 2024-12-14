@@ -1,0 +1,5 @@
+package primenumbermapreduce;
+
+public class PrimeNumberMapper {
+
+}
