@@ -12,5 +12,6 @@
 	<classpathentry kind="lib" path="C:/Users/MahaaGURU/Downloads/Hadoop/hadoop-3.3.6/share/hadoop/common/hadoop-common-3.3.6.jar"/>
 	<classpathentry kind="lib" path="C:/Users/MahaaGURU/Downloads/Hadoop/hadoop-3.3.6/share/hadoop/hdfs/hadoop-hdfs-3.3.6.jar"/>
 	<classpathentry kind="lib" path="C:/Users/MahaaGURU/Downloads/Hadoop/hadoop-3.3.6/share/hadoop/hdfs/hadoop-hdfs-client-3.3.6.jar"/>
+	<classpathentry kind="lib" path="C:/Users/MahaaGURU/Downloads/Hadoop/commons-math3-3.6.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
