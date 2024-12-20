@@ -10,8 +10,6 @@ set JAR_PATH=..\AprioriDriver.jar
 set CLASS_NAME=apriori.AprioriDriver
 set INPUT_PATH=\user\MahaaGURU\input
 set OUTPUT_PATH=\user\MahaaGURU\output!K!
-echo "variables intialised successfull..... loop start"
-pause
 
 cd "C:\Users\MahaaGURU\Downloads\Hadoop\hadoop-3.3.6"
 
