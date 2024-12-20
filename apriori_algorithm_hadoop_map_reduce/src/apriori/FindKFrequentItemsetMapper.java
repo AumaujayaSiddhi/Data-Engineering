@@ -17,12 +17,14 @@ import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapred.Counters.Counter;
 import org.apache.hadoop.mapreduce.Mapper;
 
 public class FindKFrequentItemsetMapper extends Mapper<Object, Text, Text, IntWritable> {
 
 	LinkedHashSet<String> remaining_unique_items = new LinkedHashSet<String>();
 	LinkedList<String> combinations_of_unique_items = new LinkedList<String>();
+	Integer k;
 
 	@Override
 	protected void setup(Mapper<Object, Text, Text, IntWritable>.Context context)
@@ -30,11 +32,15 @@ public class FindKFrequentItemsetMapper extends Mapper<Object, Text, Text, IntWr
 
 		// Getting a configuration....
 		Configuration configuration = context.getConfiguration();
+		
+		// Get the value of k
+		k = Integer.parseInt(configuration.get("k"));
+		
 		// Creating a file system object of configuration......
 		FileSystem filesystem = FileSystem.get(configuration);
-
 		// Path of previous algorithm pass.....
-		Path kfrequent_previous = new Path("/user/MahaaGURU/output/part-r-00000");
+		Path kfrequent_previous = new Path("/user/MahaaGURU/output"+((k-1 == 0) ? "" : k-1)+"/part-r-00000");
+		
 		// Open the file at output path and read it
 		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(filesystem.open(kfrequent_previous)));
 
@@ -48,18 +54,25 @@ public class FindKFrequentItemsetMapper extends Mapper<Object, Text, Text, IntWr
 		}
 		bufferedReader.close();
 
-		// Make combinations of unique items. I used apache math library.....
-		List<String> list_of_remaining_unique_items = new ArrayList<>(remaining_unique_items);
-		Iterator<int[]> k_sized_combinations_of_unique_items = CombinatoricsUtils
-				.combinationsIterator(list_of_remaining_unique_items.size(), 2);
-		while (k_sized_combinations_of_unique_items.hasNext()) {
-			int[] next_combination = k_sized_combinations_of_unique_items.next();
-			StringBuilder combinationString = new StringBuilder();
-			for (int i = 0; i < next_combination.length; i++) {
-				combinationString.append(list_of_remaining_unique_items.get(next_combination[i])
-						+ ((i < next_combination.length - 1) ? "," : ""));
+		// Checking if number of unique items is less than k
+		if (remaining_unique_items.size() <= k) {
+			Counter counter = (Counter) context.getCounter("AprioriGroup", "AprioriStopJob");
+			counter.increment(1);
+		}
+		else {
+			// Make combinations of unique items. I used apache math library.....
+			List<String> list_of_remaining_unique_items = new ArrayList<>(remaining_unique_items);
+			Iterator<int[]> k_sized_combinations_of_unique_items = CombinatoricsUtils
+					.combinationsIterator(list_of_remaining_unique_items.size(), k);
+			while (k_sized_combinations_of_unique_items.hasNext()) {
+				int[] next_combination = k_sized_combinations_of_unique_items.next();
+				StringBuilder combinationString = new StringBuilder();
+				for (int i = 0; i < next_combination.length; i++) {
+					combinationString.append(list_of_remaining_unique_items.get(next_combination[i])
+							+ ((i < next_combination.length - 1) ? "," : ""));
+				}
+				combinations_of_unique_items.add(combinationString.toString());
 			}
-			combinations_of_unique_items.add(combinationString.toString());
 		}
 	}
 
