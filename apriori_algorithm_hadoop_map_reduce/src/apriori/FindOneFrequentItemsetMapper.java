@@ -10,12 +10,6 @@ import org.apache.hadoop.mapreduce.Mapper;
 public class FindOneFrequentItemsetMapper extends Mapper<Object, Text, Text, IntWritable> {
 
 	@Override
-	protected void setup(Mapper<Object, Text, Text, IntWritable>.Context context)
-			throws IOException, InterruptedException {
-		System.out.println("Mapper setup method........");
-	}
-
-	@Override
 	protected void map(Object key, Text value, Context context) throws IOException, InterruptedException {
 
 		StringTokenizer strTokens = new StringTokenizer(value.toString(), ",");

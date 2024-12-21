@@ -74,6 +74,7 @@ public class FindKFrequentItemsetMapper extends Mapper<Object, Text, Text, IntWr
 				combinations_of_unique_items.add(combinationString.toString());
 			}
 		}
+		super.setup(context);
 	}
 
 	@Override
